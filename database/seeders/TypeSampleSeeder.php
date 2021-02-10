@@ -17,5 +17,13 @@ class TypeSampleSeeder extends Seeder
         $type_sample = new TypeSample;
         $type_sample->name =  "Tejido tumoral congelado";
         $type_sample->save();
+
+        $type_sample = new TypeSample;
+        $type_sample->name =  "Taco parafinado de tumor";
+        $type_sample->save();
+
+        $type_sample = new TypeSample;
+        $type_sample->name =  "Taco tumoral congelado";
+        $type_sample->save();
     }
 }

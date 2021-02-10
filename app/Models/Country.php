@@ -14,8 +14,25 @@ class Country extends Model
         'code',
     ];
 
+
+    ////RELATIONSHIPS
+
     public function states()
     {
         return $this->hasMany('App\Mondels\State');
+    }
+
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+                ->orWhere('name', "LIKE", '%'.$filter.'%')
+                ->orWhere('code', "LIKE", '%'.$filter.'%')
+                ->orWhere('id', "LIKE", '%'.$filter.'%');
     }
 }

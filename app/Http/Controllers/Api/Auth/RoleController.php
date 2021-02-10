@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRoleRequest;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -17,10 +19,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return response()->json([
-            'data' => $roles,
-            'message' => 'Successfully list roles!'
-        ], 200);
+        return $this->successResponse($roles,'Roles list', 200);
     }
 
     /**
@@ -37,10 +36,8 @@ class RoleController extends Controller
         $role->guard_name = 'api';
         $role->fill($request->validated());
         $role->save();
-        return response()->json([
-            'data' => $role,
-            'message' => 'Successfully created Role!'
-        ], 201);
+
+        return $this->successResponse($role,'Successfully created Role!', 201);
     }
 
     /**

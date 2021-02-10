@@ -22,7 +22,10 @@ class DoctorFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'contact' => "0".rand(91100501, 97999999),
+
         ];
     }
 }

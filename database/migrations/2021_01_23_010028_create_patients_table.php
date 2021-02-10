@@ -18,7 +18,7 @@ class CreatePatientsTable extends Migration
             $table->string('code', 10);
             $table->date('birth');
             $table->string('type_doc', 20);
-            $table->string('n_doc', 20);
+            $table->string('n_doc', 20)->unique();
             $table->string('name',50);
             $table->string('last_name');
             $table->string('phone',50);

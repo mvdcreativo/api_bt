@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\TumorLineage;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TumorLineageController extends Controller
 {
+
+    use ApiResponser;
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class TumorLineageController extends Controller
      */
     public function index()
     {
-        //
+        $tumor_lineages = TumorLineage::all();
+        return $this->successResponse($tumor_lineages,'Tumor Lineages list', 200);
     }
 
     /**

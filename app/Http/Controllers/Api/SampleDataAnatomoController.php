@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\PatientData;
+use App\Models\SampleDataAnatomo;
 use Illuminate\Http\Request;
 
-class PatientDataController extends Controller
+class SampleDataAnatomoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class PatientDataController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PatientData  $patientData
+     * @param  \App\Models\SampleDataAnatomo  $sampleDataAnatomo
      * @return \Illuminate\Http\Response
      */
-    public function show(PatientData $patientData)
+    public function show(SampleDataAnatomo $sampleDataAnatomo)
     {
         //
     }
@@ -43,10 +43,10 @@ class PatientDataController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PatientData  $patientData
+     * @param  \App\Models\SampleDataAnatomo  $sampleDataAnatomo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PatientData $patientData)
+    public function update(Request $request, SampleDataAnatomo $sampleDataAnatomo)
     {
         //
     }
@@ -54,10 +54,10 @@ class PatientDataController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PatientData  $patientData
+     * @param  \App\Models\SampleDataAnatomo  $sampleDataAnatomo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PatientData $patientData)
+    public function destroy(SampleDataAnatomo $sampleDataAnatomo)
     {
         //
     }

@@ -29,6 +29,12 @@ class Patient extends Model
         'obs'
     ];
 
+    ///////////RELATIONSHIP
+
+    public function patient_data()
+    {
+        return $this->hasOne('App\Models\PatientData');
+    }
 
     public function breed()
     {
@@ -52,7 +58,7 @@ class Patient extends Model
 
     public function city()
     {
-        return $this->belongsTo('App\Models\City');
+        return $this->belongsTo('App\Models\City')->with('state');
     }
 
     public function families()
@@ -75,6 +81,21 @@ class Patient extends Model
         return $this->hasMany('App\Models\Sample');
     }
 
+
+
+
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+                ->orWhere('name', "LIKE", '%'.$filter.'%')
+                ->orWhere('id', "LIKE", '%'.$filter.'%');
+    }
 
 
 }

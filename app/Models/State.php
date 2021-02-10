@@ -15,6 +15,7 @@ class State extends Model
         'country_id'
     ];
 
+    ////RELATIONSHIP
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -24,4 +25,22 @@ class State extends Model
     {
         return $this->hasMany('App\Models\City');
     }
+    ////////////
+
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+                ->orWhere('name', "LIKE", '%'.$filter.'%')
+                ->orWhere('code', "LIKE", '%'.$filter.'%')
+                ->orWhere('id', "LIKE", '%'.$filter.'%');
+    }
+
+
+
 }

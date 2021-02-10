@@ -15,8 +15,23 @@ class City extends Model
         'state_id'
     ];
 
+
+    ///RELATIONSHIP
     public function state()
     {
-        return $this->belongsTo('App\Models\State');
+        return $this->belongsTo('App\Models\State')->with('country');
+    }
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+                ->orWhere('name', "LIKE", '%'.$filter.'%')
+                ->orWhere('code', "LIKE", '%'.$filter.'%')
+                ->orWhere('id', "LIKE", '%'.$filter.'%');
     }
 }

@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
+
 class Handler extends ExceptionHandler
 {
     use ApiResponser;
@@ -41,7 +42,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $exception) {
-            parent::report($exception);
+            // parent::report($exception);
         });
     }
 
@@ -64,6 +65,14 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof MethodNotAllowedHttpException) {
             return $this->errorResponse('The specified method for the request is invalid', 405);
+        }
+
+        if ($exception instanceof AccessDeniedHttpException) {
+            return $this->errorResponse('Unauthorized', 403);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->errorResponse('URL Not Found', 404);
         }
 
         if ($exception instanceof NotFoundHttpException) {

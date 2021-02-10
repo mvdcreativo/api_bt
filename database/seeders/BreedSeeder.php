@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Breed;
 use Illuminate\Database\Seeder;
 
 class BreedSeeder extends Seeder
@@ -13,6 +14,16 @@ class BreedSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $breed = new Breed;
+        $breed->name =  "Caucásico";
+        $breed->save();
+
+        $breed = new Breed;
+        $breed->name =  "Afro";
+        $breed->save();
+
+        $breed = new Breed;
+        $breed->name =  "Asiatico";
+        $breed->save();
     }
 }

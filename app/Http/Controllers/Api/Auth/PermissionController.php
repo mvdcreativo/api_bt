@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePermissionRequest;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    use ApiResponser;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +19,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return response()->json([
-            'data' => Permission::all(),
-            'message' => 'Successfully list Permissions!'
-        ], 200);
+        $permissions =  Permission::all();
+        return $this->successResponse($permissions,'Permissions list', 200);
     }
 
     /**

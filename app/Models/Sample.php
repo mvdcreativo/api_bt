@@ -58,4 +58,18 @@ class Sample extends Model
     {
         return $this->belongsToMany('App\Models\Stage');
     }
+
+
+
+    
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->where('code', $filter);
+    }
 }

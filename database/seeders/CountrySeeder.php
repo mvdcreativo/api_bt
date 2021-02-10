@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Country;
 use Illuminate\Database\Seeder;
 
 class CountrySeeder extends Seeder
@@ -13,6 +14,9 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-        //
+        $country = new Country;
+        $country->name =  "Uruguay";
+        $country->code =  "URY";
+        $country->save(); 
     }
 }

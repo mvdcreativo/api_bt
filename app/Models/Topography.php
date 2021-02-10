@@ -29,4 +29,20 @@ class Topography extends Model
     {
         return $this->hasMany('App\Models\PatientData');
     }
+
+
+
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->orWhere('name', "LIKE", '%'.$filter.'%')
+            ->orWhere('cie10', "LIKE", '%'.$filter.'%');
+            // ->orWhere('id', "LIKE", '%'.$filter.'%');
+    }
 }

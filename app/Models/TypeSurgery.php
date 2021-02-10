@@ -18,4 +18,18 @@ class TypeSurgery extends Model
     {
         return $this->hasMany('App\Models\PatientData');
     }
+
+
+
+        /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->orWhere('name', "LIKE", '%'.$filter.'%')
+            ->orWhere('id', "LIKE", '%'.$filter.'%');
+    }
 }
