@@ -108,7 +108,21 @@ class PatientController extends Controller
             $patient_exclude_id = null;
         }
 
-        $patient = Patient::where('id','!=', $patient_exclude_id)->where("n_doc",$request->n_doc)->first();
+        if(!isset($request->n_doc)) {
+            $n_doc = $request->n_doc;
+        }else{
+            $n_doc = null;
+        }
+        if(!isset($request->code)) {
+            $code = $request->code;
+        }else{
+            $code = null;
+        }
+
+        $patient = Patient::where('id','!=', $patient_exclude_id)
+        ->code_exist($code)
+        ->n_doc_exist($n_doc)
+        ->first();
 
         if(empty($patient)){
             return response()->json(['exist'=>null], 200);

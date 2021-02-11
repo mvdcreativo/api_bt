@@ -96,6 +96,24 @@ class Patient extends Model
                 ->orWhere('name', "LIKE", '%'.$filter.'%')
                 ->orWhere('id', "LIKE", '%'.$filter.'%');
     }
+    public function scopeCode_exist($query, $filter)
+    {
+        if($filter){
+            return $query
+                ->where('code', $filter);
+        }
+        return $query;
+    }
+    public function scopeN_doc_exist($query, $filter)
+    {
+        if($filter){
+            return $query
+                ->where('n_doc', $filter);
+        }
+
+        return $query;
+
+    }
 
 
 }
