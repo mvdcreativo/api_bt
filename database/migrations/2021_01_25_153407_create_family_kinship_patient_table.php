@@ -16,7 +16,7 @@ class CreateFamilyKinshipPatientTable extends Migration
         Schema::create('family_kinship_patient', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('family_id');
-            $table->unsignedBigInteger('kinship_id');
+            $table->unsignedBigInteger('kinship_id')->nullable();
             $table->unsignedBigInteger('patient_id');
             $table->timestamps();
 

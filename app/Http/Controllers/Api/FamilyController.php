@@ -63,9 +63,10 @@ class FamilyController extends Controller
     {
         $input = $request->all();
 
-        $samples = Family::create($input);
+        $families = Family::create($input);
+        $families->patients()->sync($request->patient_id);
 
-        return $this->successResponse($samples,'Family saved', 201);
+        return $this->successResponse($families,'Family saved', 201);
     }
 
     /**

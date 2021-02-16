@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\RoleController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\EstadioController;
 use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\MedicalInstitutionController;
 use App\Http\Controllers\Api\PatientController;
@@ -67,6 +68,7 @@ Route::apiResources([
     'tnms' => TnmController::class,
     'tubes' => TubeController::class,
     'families' => FamilyController::class,
+    'estadios' => EstadioController::class,
 
 ]);
 
