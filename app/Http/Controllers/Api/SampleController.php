@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Sample;
+use App\Models\SampleData;
+use App\Models\SampleDataAnatomo;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
@@ -38,9 +40,16 @@ class SampleController extends Controller
             $filter = "";
         }
 
+        if ($request->get('patient_id')) {
+            $patient_id = $request->get('patient_id');
+        }else{
+            $patient_id = "";
+        }
+
         $samples = $query
-        ->with('sample_data', 'patient', 'type_sample', 'tumor_lineage', 'topography', 'sample_data_anatomo', 'tnm', 'stages' )
+        ->with('sample_data', 'patient', 'type_sample', 'tumor_lineage', 'topography', 'sample_data_anatomo', 'tnm' )
         ->filter($filter)
+        ->patient_id($patient_id)
         ->orderBy('id', $sort)
         ->paginate($per_page);
 
@@ -55,11 +64,39 @@ class SampleController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
+         try {
+            $sample = new Sample;
+            $sample->fill($request->all());
+            $sample->save();
 
-        $samples = Sample::create($input);
+            if($sample && $request->get('sample_data')){
+                $sample_data = new SampleData;
+                $sample_data->fill($request->get('sample_data'));
+                $sample_data->sample()->associate($sample);
+                $sample_data->save();
+            }
+            if($sample && $request->get('sample_data_anatomo')){
+                $sample_data_anatomo = new SampleDataAnatomo();
+                $sample_data_anatomo->fill($request->get('sample_data_anatomo'));
+                $sample_data_anatomo->sample()->associate($sample);
+                $sample_data_anatomo->save();
+            }
+        } catch (\Throwable $th) {
+            return $th ;
+        }
 
-        return $this->successResponse($samples,'Sample saved', 201);
+
+        
+        $sample->sample_data;
+        $sample->patient;
+        $sample->type_sample;
+        $sample->tumor_lineage;
+        $sample->topography;
+        $sample->sample_data_anatomo;
+        $sample->tnm;
+        // $sample->stages;
+
+        return $this->successResponse($sample,'Sample saved', 201);
     }
 
     /**
@@ -68,16 +105,16 @@ class SampleController extends Controller
      * @param  \App\Models\Sample  $samples
      * @return \Illuminate\Http\Response
      */
-    public function show(Sample $samples)
+    public function show(Sample $sample)
     {
 
-        $samples_show = Sample::with('sample_data', 'patient', 'type_sample', 'tumor_lineage', 'topography')->find($samples->id);
+        $sample_show = Sample::with('sample_data', 'sample_data_anatomo', 'patient', 'type_sample', 'tumor_lineage', 'topography')->find($sample->id);
 
-        if (empty($samples_show)) {
+        if (empty($sample_show)) {
             return $this->errorResponse('Sample not found',404);
         }
 
-        return $this->successResponse($samples_show,'Sample show', 200);
+        return $this->successResponse($sample_show,'Sample show', 200);
        
     }
 
@@ -88,15 +125,51 @@ class SampleController extends Controller
      * @param  \App\Models\Sample  $samples
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sample $samples)
+    public function update(Request $request, Sample $sample)
     {
-        $samples_update = Sample::find($samples->id);
+        // return $request->all();
+        try {
+            $samples_update = Sample::find($sample->id);
+            $samples_update->fill($request->all());
+            $samples_update->save();
 
-        if (empty($samples_update)) {
-            return $this->errorResponse('Sample not found',404);
+            $data = $request->sample_data;
+            $data_anatomo =   $request->sample_data_anatomo;
+            if($samples_update && $request->sample_data){
+                if($data['sample_id']){
+                    $sample_data= SampleData::where('sample_id', $data['sample_id'])->firstOrFail();
+                    $sample_data->fill($request->sample_data);
+                }else{
+                    $sample_data = new SampleData;
+                    $sample_data->fill($request->sample_data);
+                    $sample_data->sample()->associate($samples_update);
+                }
+                $sample_data->save();
+            }
+
+            if($samples_update && $request->sample_data_anatomo){
+                if($data_anatomo['sample_id']){
+                    $sample_data_anatomo= SampleDataAnatomo::where('sample_id', $data_anatomo['sample_id'])->firstOrFail();
+                    $sample_data_anatomo->fill($request->sample_data_anatomo);
+                }else{
+                    $sample_data_anatomo = new SampleDataAnatomo;
+                    $sample_data_anatomo->fill($request->sample_data_anatomo);
+                    $sample_data_anatomo->sample()->associate($samples_update);
+                }
+                $sample_data_anatomo->save();
+            }
+        } catch (\Throwable $th) {
+            return $th ;
         }
-        $samples_update->fill($request->all());
-        $samples_update->save();
+
+        $samples_update->samples_data;
+        $samples_update->patient;
+        $samples_update->type_samples;
+        $samples_update->tumor_lineage;
+        $samples_update->topography;
+        $samples_update->samples_data_anatomo;
+        $samples_update->tnm;
+        // $samples->stages;
 
         return $this->successResponse($samples_update,'Sample updated', 200);
     }
@@ -107,13 +180,13 @@ class SampleController extends Controller
      * @param  \App\Models\Sample  $samples
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sample $samples)
+    public function destroy(Sample $sample)
     {
-        $samples_delete = Sample::find($samples->id);
-        if (empty($samples_delete)) {
+        $sample_delete = Sample::find($sample->id);
+        if (empty($sample_delete)) {
             return $this->errorResponse('Sample not found',404);
         }  
-        $samples_delete->delete();
-        return $this->successResponse($samples_delete,'Sample deleted', 200);
+        $sample_delete->delete();
+        return $this->successResponse($sample_delete,'Sample deleted', 200);
     }
 }

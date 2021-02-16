@@ -13,6 +13,6 @@ class TubeSeeder extends Seeder
      */
     public function run()
     {
-        //
+
     }
 }

@@ -15,11 +15,23 @@ class Kinship extends Model
 
     public function patients()
     {
-        return $this->belongsToMany('App\Models\Patient');
+        return $this->belongsToMany('App\Models\Patient', 'family_kinship_patient');
     }
 
     public function families()
     {
-        return $this->belongsToMany('App\Models\Family');
+        return $this->belongsToMany('App\Models\Family', 'family_kinship_patient');
+    }
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->where('name', "LIKE", '%'.$filter.'%')
+            ->orWhere('id', "LIKE", '%'.$filter.'%');
     }
 }

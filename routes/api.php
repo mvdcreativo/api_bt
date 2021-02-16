@@ -9,11 +9,14 @@ use App\Http\Controllers\Api\Auth\RoleController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\MedicalInstitutionController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\SampleController;
 use App\Http\Controllers\Api\StateController;
+use App\Http\Controllers\Api\TnmController;
 use App\Http\Controllers\Api\TopographyController;
+use App\Http\Controllers\Api\TubeController;
 use App\Http\Controllers\Api\TumorLineageController;
 use App\Http\Controllers\Api\TypeSampleController;
 use App\Http\Controllers\Api\TypeSurgeryController;
@@ -59,6 +62,13 @@ Route::apiResources([
     'doctors' => DoctorController::class,
     'surgeries' => TypeSurgeryController::class,
     'samples' => SampleController::class,
+    'types_samples' => TypeSampleController::class,
+    'tumor_lineages' => TumorLineageController::class,
+    'tnms' => TnmController::class,
+    'tubes' => TubeController::class,
+    'families' => FamilyController::class,
+
 ]);
 
 Route::get('check_patient_exist', [PatientController::class, 'check_patient_exist']);
+Route::get('last_id', [PatientController::class, 'last_id']);

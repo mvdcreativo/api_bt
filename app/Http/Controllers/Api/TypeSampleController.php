@@ -15,10 +15,34 @@ class TypeSampleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $type_sample = TypeSample::all();
-        return $this->successResponse($type_sample,'listado tipos de muestras', 200);
+        $query = TypeSample::query();
+
+        if ($request->get('per_page')) {
+            $per_page = $request->get('per_page');
+        }else{
+            $per_page = 20;
+        }
+        
+        if ($request->get('sort')) {
+            $sort = $request->get('sort');
+        }else{
+            $sort = "desc";
+        }
+
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        }else{
+            $filter = "";
+        }
+
+        $types_samples = $query
+        ->filter($filter)
+        ->orderBy('id', $sort)
+        ->paginate($per_page);
+
+        return $this->successResponse($types_samples,'TypeSample list', 200);
     }
 
     /**

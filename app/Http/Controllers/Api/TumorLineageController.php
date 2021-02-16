@@ -11,17 +11,39 @@ class TumorLineageController extends Controller
 {
 
     use ApiResponser;
-
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tumor_lineages = TumorLineage::all();
-        return $this->successResponse($tumor_lineages,'Tumor Lineages list', 200);
+        $query = TumorLineage::query();
+
+        if ($request->get('per_page')) {
+            $per_page = $request->get('per_page');
+        }else{
+            $per_page = 20;
+        }
+        
+        if ($request->get('sort')) {
+            $sort = $request->get('sort');
+        }else{
+            $sort = "desc";
+        }
+
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        }else{
+            $filter = "";
+        }
+
+        $tumor_lineges = $query
+        ->filter($filter)
+        ->orderBy('id', $sort)
+        ->paginate($per_page);
+
+        return $this->successResponse($tumor_lineges,'Tumor Lineages list', 200);
     }
 
     /**

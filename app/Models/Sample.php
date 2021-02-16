@@ -40,7 +40,7 @@ class Sample extends Model
     }
                 
     public function topography()
-    {
+    { 
         return $this->belongsTo('App\Models\Topography');
     }
 
@@ -71,5 +71,12 @@ class Sample extends Model
         if($filter)
             return $query
             ->where('code', $filter);
+    }
+
+    public function scopePatient_id($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->where('patient_id', $filter);
     }
 }

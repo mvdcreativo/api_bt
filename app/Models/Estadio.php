@@ -18,4 +18,16 @@ class Estadio extends Model
         return $this->hasMany('App\Models\SampleDataAnatomos');
     }
 
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->where('name', "LIKE", '%'.$filter.'%')
+            ->orWhere('id', "LIKE", '%'.$filter.'%');
+    }
 }

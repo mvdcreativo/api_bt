@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -63,12 +64,12 @@ class Patient extends Model
 
     public function families()
     {
-        return $this->belongsToMany('App\Models\Family');
+        return $this->belongsToMany('App\Models\Family', 'family_kinship_patient');
     }
 
     public function kinships()
     {
-        return $this->belongsToMany('App\Models\Kinship');
+        return $this->belongsToMany('App\Models\Kinship', 'family_kinship_patient');
     }
     
     public function evolutions()
@@ -91,14 +92,28 @@ class Patient extends Model
 
     public function scopeFilter($query, $filter)
     {
-        if($filter)
-            return $query
-                ->orWhere('name', "LIKE", '%'.$filter.'%')
-                ->orWhere('id', "LIKE", '%'.$filter.'%');
+
+        if($filter){
+
+                $query
+                ->where('name', "LIKE", '%'.trim($filter).'%')
+                ->orWhere('last_name', "LIKE", '%'.trim($filter).'%')
+                ->orWhere('n_doc', "LIKE", '%'.trim($filter).'%')
+                ->orWhere('phone', "LIKE", '%'.trim($filter).'%')
+                ->orWhere('email', "LIKE", '%'.trim($filter).'%')
+                ->orWhere('id', "LIKE", '%'.trim($filter).'%')
+                ->orWhere('code', "LIKE", '%'.trim($filter).'%')
+                ->orWhereHas('medical_institution', function(Builder $q) use ($filter){
+                    $q->where('name', "LIKE", '%'.trim($filter).'%');
+                });
+                return $query;
+            
+
+        }
     }
     public function scopeCode_exist($query, $filter)
     {
-        if($filter){
+        if(isset($filter)){
             return $query
                 ->where('code', $filter);
         }
@@ -106,7 +121,7 @@ class Patient extends Model
     }
     public function scopeN_doc_exist($query, $filter)
     {
-        if($filter){
+        if(isset($filter)){
             return $query
                 ->where('n_doc', $filter);
         }

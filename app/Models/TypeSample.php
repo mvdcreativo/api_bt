@@ -18,4 +18,18 @@ class TypeSample extends Model
     {
         return $this->hasMany('App\Models\Sample');
     }
+
+
+    
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->orWhere('name', "LIKE", '%'.$filter.'%');
+
+    }
 }

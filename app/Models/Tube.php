@@ -22,4 +22,21 @@ class Tube extends Model
     }
 
     
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->orWhere('name', "LIKE", '%'.$filter.'%');
+    }
+    
+    public function scopeSample_id($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->where('sample_id', $filter);
+    }
 }

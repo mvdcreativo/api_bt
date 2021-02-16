@@ -55,17 +55,17 @@ class CreatePatientDataTable extends Migration
 
             $table->boolean('mamografia');
             $table->string('mamografia_frecuencia')->nullable();
-            $table->string('mamografia_otros',10)->nullable();
+            $table->string('mamografia_otros')->nullable();
             $table->date('mamografia_date_ultima')->nullable();
 
             $table->boolean('pap');
             $table->string('pap_frecuencia')->nullable();
-            $table->string('pap_otros',10)->nullable();
+            $table->string('pap_otros')->nullable();
             $table->date('pap_date_ultima')->nullable();
 
-            $table->string('edad_menarca', 20)->nullable();
-            $table->string('edad_primer_emb', 20)->nullable();
-            $table->string('menopausia_edad', 20)->nullable();
+            $table->tinyInteger('edad_menarca')->nullable();
+            $table->tinyInteger('edad_primer_emb')->nullable();
+            $table->tinyInteger('menopausia_edad')->nullable();
             $table->boolean('menopausia_quirurgica')->nullable();
             $table->boolean('antecedente');
             $table->boolean('antecedente_directo')->nullable();

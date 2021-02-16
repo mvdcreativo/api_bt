@@ -18,11 +18,13 @@ class SampleDataAnatomo extends Model
         'reseccion_q',
         'con_cancer',
         'type_surgery_id',
+        'operacion',
         'isquemia_min',
         'isquemia_seg',
         'tacos_cant',
         'laminas_cant',
         'necrosis_tumoral_cant',
+        'obs'
     ];
 
 

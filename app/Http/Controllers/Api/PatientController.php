@@ -40,9 +40,14 @@ class PatientController extends Controller
             $filter = "";
         }
 
+        $filters = explode(" ", $filter);
+        foreach ($filters as $key => $f) {
+            $query->filter($f);
+        }
+        
         $patients = $query
         ->with('patient_data')
-        ->filter($filter)
+        // ->filter($filter)
         ->orderBy('id', $sort)
         ->paginate($per_page);
         return $this->successResponse($patients,'Patients list', 200);
@@ -75,6 +80,7 @@ class PatientController extends Controller
         
         
         $patient->patient_data;
+        $patient->city;
         return $this->successResponse($patient,'Patient saved', 201);
 
     }
@@ -108,12 +114,12 @@ class PatientController extends Controller
             $patient_exclude_id = null;
         }
 
-        if(!isset($request->n_doc)) {
+        if($request->n_doc) {
             $n_doc = $request->n_doc;
         }else{
             $n_doc = null;
         }
-        if(!isset($request->code)) {
+        if($request->code) {
             $code = $request->code;
         }else{
             $code = null;
@@ -143,10 +149,10 @@ class PatientController extends Controller
     {
 
         try {
-            $patient = Patient::find($patient->id);
-            $patient->fill($request->all());
-            $patient->save();
-            if($patient && $request->get('patient_data')){
+            $patient_update = Patient::find($patient->id);
+            $patient_update->fill($request->all());
+            $patient_update->save();
+            if($patient_update && $request->get('patient_data')){
                 $data = $request->patient_data;
                 // return $data;
                 if($data['patient_id']){
@@ -155,7 +161,7 @@ class PatientController extends Controller
                 }else{
                     $patient_data = new PatientData;
                     $patient_data->fill($request->patient_data);
-                    $patient_data->patient()->associate($patient);
+                    $patient_data->patient()->associate($patient_update);
                 }
                 $patient_data->save();
                 // return $patient_data;
@@ -165,9 +171,9 @@ class PatientController extends Controller
         }
         
         
-        $patient->patient_data;
-        $patient->city;
-        return $this->successResponse($patient,'Patient updated', 200);
+        $patient_update->patient_data;
+        $patient_update->city;
+        return $this->successResponse($patient_update,'Patient updated', 200);
 
     }
 
@@ -189,5 +195,12 @@ class PatientController extends Controller
     {
         $patient = Patient::all();
         return $this->successResponse($patient,'Patient list', 200);
+    }
+
+    public function last_id()
+    {
+        $id = Patient::latest('id')->first();
+
+        return $this->successResponse($id,'Patient last id', 200);
     }
 }

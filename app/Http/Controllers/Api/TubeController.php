@@ -2,19 +2,55 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tube;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TubeController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Tube::query();
+
+        if ($request->get('per_page')) {
+            $per_page = $request->get('per_page');
+        }else{
+            $per_page = 20;
+        }
+        
+        if ($request->get('sort')) {
+            $sort = $request->get('sort');
+        }else{
+            $sort = "desc";
+        }
+
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        }else{
+            $filter = "";
+        }
+
+        
+        if ($request->get('sample_id')) {
+            $sample_id = $request->get('sample_id');
+        }else{
+            $sample_id = "";
+        }
+
+        $tubes = $query
+        ->filter($filter)
+        ->sample_id($sample_id)
+        ->orderBy('id', $sort)
+        ->paginate($per_page);
+
+        return $this->successResponse($tubes,'Tube list', 200);
     }
 
     /**
@@ -25,7 +61,11 @@ class TubeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $samples = Tube::create($input);
+
+        return $this->successResponse($samples,'Tube saved', 201);
     }
 
     /**
@@ -36,7 +76,13 @@ class TubeController extends Controller
      */
     public function show(Tube $tube)
     {
-        //
+        $tube_show = Tube::find($tube->id);
+
+        if (empty($tube_show)) {
+            return $this->errorResponse('Tube not found',404);
+        }
+
+        return $this->successResponse($tube_show,'Tube show', 200);
     }
 
     /**
@@ -48,7 +94,15 @@ class TubeController extends Controller
      */
     public function update(Request $request, Tube $tube)
     {
-        //
+        $tuube_update = Tube::find($tube->id);
+
+        if (empty($tuube_update)) {
+            return $this->errorResponse('Tube not found',404);
+        }
+        $tuube_update->fill($request->all());
+        $tuube_update->save();
+
+        return $this->successResponse($tuube_update,'Tube updated', 200);
     }
 
     /**
