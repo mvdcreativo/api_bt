@@ -16,9 +16,34 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::all();
+        $query = Role::query();
+
+        if ($request->get('per_page')) {
+            $per_page = $request->get('per_page');
+        }else{
+            $per_page = 20;
+        }
+        
+        if ($request->get('sort')) {
+            $sort = $request->get('sort');
+        }else{
+            $sort = "desc";
+        }
+
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        }else{
+            $filter = "";
+        }
+
+        $roles = $query
+        ->with('permissions')
+        ->where('name', "LIKE", '%'.$filter.'%')
+        ->orderBy('id', $sort)
+        ->paginate($per_page);
+
         return $this->successResponse($roles,'Roles list', 200);
     }
 
@@ -36,6 +61,7 @@ class RoleController extends Controller
         $role->guard_name = 'api';
         $role->fill($request->validated());
         $role->save();
+        $role->syncPermissions($request->get('permissions'));
 
         return $this->successResponse($role,'Successfully created Role!', 201);
     }
@@ -65,6 +91,8 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $role->fill($request->all());
+        $role->save();
+
         return response()->json([
             'data' => $role,
             'message' => 'Successfully Update Role!'
@@ -91,13 +119,12 @@ class RoleController extends Controller
 
     public function assign_permission($id, Request $request)
     {
-
         // return $request->all();
         $role = Role::find($id);
         $role->syncPermissions($request->get('permissions'));
         return response()->json([
             'data' => $role,
             'message' => 'Successfully deleted Role!'
-        ], 200);  
+        ], 200);
     }
 }

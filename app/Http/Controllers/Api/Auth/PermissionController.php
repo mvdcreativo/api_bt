@@ -17,10 +17,34 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $permissions =  Permission::all();
-        return $this->successResponse($permissions,'Permissions list', 200);
+        $query = Permission::query();
+
+        if ($request->get('per_page')) {
+            $per_page = $request->get('per_page');
+        }else{
+            $per_page = 20;
+        }
+        
+        if ($request->get('sort')) {
+            $sort = $request->get('sort');
+        }else{
+            $sort = "desc";
+        }
+
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        }else{
+            $filter = "";
+        }
+
+        $permissions = $query
+        ->where('name', "LIKE", '%'.$filter.'%')
+        ->orderBy('name', $sort)
+        ->paginate($per_page);
+
+        return $this->successResponse($permissions,'Roles list', 200);
     }
 
     /**
@@ -66,6 +90,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
         $permission->fill($request->all());
+        $permission->save();
         return response()->json([
             'data' => $permission,
             'message' => 'Successfully Update Permission!'

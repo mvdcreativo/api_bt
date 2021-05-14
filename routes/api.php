@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\TubeController;
 use App\Http\Controllers\Api\TumorLineageController;
 use App\Http\Controllers\Api\TypeSampleController;
 use App\Http\Controllers\Api\TypeSurgeryController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,45 +33,56 @@ use App\Http\Controllers\Api\TypeSurgeryController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//PROTECTED ROUTES
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-Route::group(['prefix' => 'auth'], function () {
-    Route::post('signup', [AuthController::class, 'signup']);
-});
-
-Route::group(['prefix' => 'admin'], function () {
     Route::apiResources([
-        'roles'=> RoleController::class,
-        'permissions'=> PermissionController::class
+        'type_samples' => TypeSampleController::class,
+        'topographies' => TopographyController::class,
+        'tumor_lineages' => TumorLineageController::class,
+        'countries' => CountryController::class,
+        'states' => StateController::class,
+        'cities' => CityController::class,
+        'patients' => PatientController::class,
+        'medical-institutions' => MedicalInstitutionController::class,
+        'doctors' => DoctorController::class,
+        'surgeries' => TypeSurgeryController::class,
+        'samples' => SampleController::class,
+        'types_samples' => TypeSampleController::class,
+        'tumor_lineages' => TumorLineageController::class,
+        'tnms' => TnmController::class,
+        'tubes' => TubeController::class,
+        'families' => FamilyController::class,
+        'estadios' => EstadioController::class,
+        'users' => UserController::class,
     ]);
-    Route::post('assign_permission_to_role/{role_id}', [RoleController::class, 'assign_permission']);
+    
+    //Check exist
+    Route::get('check_patient_exist', [PatientController::class, 'check_patient_exist']);
+    Route::get('last_id', [PatientController::class, 'last_id']);
+    Route::get('check_email_exist', [UserController::class, 'check_email_exist']);
+    
+    //Roles y permisos
+    Route::group(['prefix' => 'admin'], function () {
+        Route::apiResources([
+            'roles'=> RoleController::class,
+            'permissions'=> PermissionController::class
+        ]);
+        Route::post('assign_permission_to_role/{role_id}', [RoleController::class, 'assign_permission']);
+    
+    });
 
+    //auth
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('user', [AuthController::class, 'currentUser']);
+        Route::get('logout', [AuthController::class, 'logout']);
+
+    });
 });
 
-Route::apiResources([
-    'type_samples' => TypeSampleController::class,
-    'topographies' => TopographyController::class,
-    'tumor_lineages' => TumorLineageController::class,
-    'countries' => CountryController::class,
-    'states' => StateController::class,
-    'cities' => CityController::class,
-    'patients' => PatientController::class,
-    'medical-institutions' => MedicalInstitutionController::class,
-    'doctors' => DoctorController::class,
-    'surgeries' => TypeSurgeryController::class,
-    'samples' => SampleController::class,
-    'types_samples' => TypeSampleController::class,
-    'tumor_lineages' => TumorLineageController::class,
-    'tnms' => TnmController::class,
-    'tubes' => TubeController::class,
-    'families' => FamilyController::class,
-    'estadios' => EstadioController::class,
 
-]);
-
-Route::get('check_patient_exist', [PatientController::class, 'check_patient_exist']);
-Route::get('last_id', [PatientController::class, 'last_id']);
+//PUBLIC ROUTES
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('signup', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+});

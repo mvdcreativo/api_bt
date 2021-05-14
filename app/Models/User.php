@@ -44,4 +44,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->orWhere('name', "LIKE", '%'.$filter.'%')
+            ->orWhere('last_name', "LIKE", '%'.$filter.'%')
+            ->orWhere('email', "LIKE", '%'.$filter.'%')
+            ->orWhere('id', "LIKE", '%'.$filter.'%');
+    }
+
+    public function scopeEmail_exist($query, $filter)
+    {
+        if(isset($filter)){
+            return $query
+                ->where('email', $filter);
+        }
+
+        return $query;
+
+    }
 }
