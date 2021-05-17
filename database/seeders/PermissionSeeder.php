@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
@@ -58,5 +59,15 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'ubication.show', 'description'=> 'Ver datos de un Ubicación', 'guard_name'=>'api']);
         Permission::create(['name' => 'ubication.update', 'description'=> 'Actualizar datos de un Ubicación', 'guard_name'=>'api']);
         Permission::create(['name' => 'ubication.delete', 'description'=> 'Eliminar Ubicaciones', 'guard_name'=>'api']);
+
+        $roleSAdmin = Role::create(['name' => 'SuperAdmin', 'description'=> 'Todos los privilegios', 'guard_name'=>'api']);
+        $roleSAdmin->syncPermissions([
+            'patient.index', 'patient.show', 'patient.create', 'patient.update','patient.delete',
+            'sample.index', 'sample.show', 'sample.create', 'sample.update','sample.delete',
+            'user.index', 'user.show', 'user.create', 'user.update','user.delete',
+            'ubication.index', 'ubication.show', 'ubication.create', 'ubication.update','ubication.delete',
+            'role.index', 'role.show', 'role.create', 'role.update','role.delete',
+            'permission.index', 'permission.show', 'permission.create', 'permission.update','permission.delete',
+        ]);
     }
 }
