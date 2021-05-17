@@ -13,11 +13,16 @@ class SampleController extends Controller
 {
 
     use ApiResponser;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['permission:sample.index'])->only('index');
+        $this->middleware(['permission:sample.show'])->only('show');
+        $this->middleware(['permission:sample.update'])->only('update');
+        $this->middleware(['permission:sample.delete'])->only('destroy');
+        $this->middleware(['permission:sample.create'])->only('store');
+    }
+
+
     public function index(Request $request)
     {
         $query = Sample::query();

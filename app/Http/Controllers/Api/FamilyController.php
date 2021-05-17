@@ -10,11 +10,16 @@ use Illuminate\Http\Request;
 class FamilyController extends Controller
 {
     use ApiResponser;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware(['permission:patient.index'])->only('index');
+        $this->middleware(['permission:patient.show'])->only('show');
+        $this->middleware(['permission:patient.update'])->only('update');
+        $this->middleware(['permission:patient.delete'])->only('destroy');
+        $this->middleware(['permission:patient.create'])->only('store');
+    }
+    
     public function index(Request $request)
     {
         $query = Family::query();

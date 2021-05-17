@@ -11,7 +11,14 @@ use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
     use ApiResponser;
-
+    public function __construct()
+    {
+        $this->middleware(['permission:permission.index'])->only('index');
+        $this->middleware(['permission:permission.show'])->only('show');
+        $this->middleware(['permission:permission.update'])->only('update');
+        $this->middleware(['permission:permission.delete'])->only('destroy');
+        $this->middleware(['permission:permission.create'])->only('store');
+    }
     /**
      * Display a listing of the resource.
      *

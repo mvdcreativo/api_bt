@@ -7,6 +7,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -20,6 +21,7 @@ class AuthController extends Controller
             'email' => $request['email'],
             'password' => bcrypt($request['password'])
         ]);
+        $user->getAllPermissions();
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
@@ -49,6 +51,7 @@ class AuthController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
+        $user->getAllPermissions();
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
@@ -77,6 +80,7 @@ class AuthController extends Controller
     public function currentUser(Request $request){
 
         $user = $request->user();
+        $user->getAllPermissions();
 
         return response($user, 200);
 

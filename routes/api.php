@@ -61,7 +61,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('check_patient_exist', [PatientController::class, 'check_patient_exist']);
     Route::get('last_id', [PatientController::class, 'last_id']);
     Route::get('check_email_exist', [UserController::class, 'check_email_exist']);
-    
+    Route::get('check_role_exist', [RoleController::class, 'check_role_exist']);
+
     //Roles y permisos
     Route::group(['prefix' => 'admin'], function () {
         Route::apiResources([
@@ -71,6 +72,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('assign_permission_to_role/{role_id}', [RoleController::class, 'assign_permission']);
     
     });
+
+
 
     //auth
     Route::group(['prefix' => 'auth'], function () {

@@ -11,11 +11,15 @@ class CityController extends Controller
 {
 
     use ApiResponser;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['permission:ubication.index'])->only('index');
+        $this->middleware(['permission:ubication.show'])->only('show');
+        $this->middleware(['permission:ubication.update'])->only('update');
+        $this->middleware(['permission:ubication.delete'])->only('destroy');
+        $this->middleware(['permission:ubication.create'])->only('store');
+    }
+
     public function index(Request $request)
     {
         $query = City::query();
