@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Sample;
+use App\Models\SampleData;
+use App\Models\SampleDataAnatomo;
+use App\Models\Tube;
+use App\Observers\SampleDataAnatomoObserver;
+use App\Observers\SampleDataObserver;
+use App\Observers\SampleObserver;
+use App\Observers\TubeObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Sample::observe(SampleObserver::class);
+        Tube::observe(TubeObserver::class);
+        SampleData::observe(SampleDataObserver::class);
+        SampleDataAnatomo::observe(SampleDataAnatomoObserver::class);
     }
 }

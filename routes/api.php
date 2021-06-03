@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\MedicalInstitutionController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\SampleController;
+use App\Http\Controllers\Api\StageController;
 use App\Http\Controllers\Api\StateController;
 use App\Http\Controllers\Api\TnmController;
 use App\Http\Controllers\Api\TopographyController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Api\TumorLineageController;
 use App\Http\Controllers\Api\TypeSampleController;
 use App\Http\Controllers\Api\TypeSurgeryController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\TraceabilityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,13 +57,20 @@ Route::middleware('auth:sanctum')->group(function () {
         'families' => FamilyController::class,
         'estadios' => EstadioController::class,
         'users' => UserController::class,
+        'stages' => StageController::class,
+        'traceabilities' => TraceabilityController::class,
     ]);
     
     //Check exist
     Route::get('check_patient_exist', [PatientController::class, 'check_patient_exist']);
     Route::get('last_id', [PatientController::class, 'last_id']);
+    Route::get('last_id_sample', [SampleController::class, 'last_id_sample']);
+    Route::get('check_sample_exist', [SampleController::class, 'check_sample_exist']);
+    Route::get('last_id_tube', [TubeController::class, 'last_id_tube']);
+    Route::get('check_tube_exist', [TubeController::class, 'check_tube_exist']);
     Route::get('check_email_exist', [UserController::class, 'check_email_exist']);
     Route::get('check_role_exist', [RoleController::class, 'check_role_exist']);
+    Route::get('last_status_sample', [TraceabilityController::class, 'last_status_sample']);
 
     //Roles y permisos
     Route::group(['prefix' => 'admin'], function () {

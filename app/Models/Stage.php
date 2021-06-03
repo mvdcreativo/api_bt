@@ -14,8 +14,19 @@ class Stage extends Model
     ];
 
 
-    public function Sample()
+    public function traceabilities()
     {
-        return $this->belongsToMany('App\Models\Sample');
+        return $this->hasMany(Traceability::class);
+    }
+
+        /////////////////////////////
+        ///SCOPES
+    /////////////////////////////
+
+    public function scopeFilter($query, $filter)
+    {
+        if($filter)
+            return $query
+                ->orWhere('name', "LIKE", '%'.$filter.'%');
     }
 }

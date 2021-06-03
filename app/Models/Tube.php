@@ -13,7 +13,7 @@ class Tube extends Model
         'name',
         'code',
         'volume',
-        'sample_id'
+        'sample_id',
     ];
 
     public function sample()
@@ -21,6 +21,10 @@ class Tube extends Model
         return $this->belongsTo('App\Models\Sample');
     }
 
+    public function traceabilities()
+    {
+        return $this->hasMany(Traceability::class);
+    }
     
     /////////////////////////////
         ///SCOPES

@@ -54,11 +54,10 @@ class Sample extends Model
         return $this->hasOne('App\Models\SampleDataAnatomo');
     }
 
-    public function stages()
+    public function traceabilities()
     {
-        return $this->belongsToMany('App\Models\Stage');
+        return $this->hasMany(Traceability::class);
     }
-
 
 
     

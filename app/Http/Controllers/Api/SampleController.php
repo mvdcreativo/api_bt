@@ -194,4 +194,12 @@ class SampleController extends Controller
         $sample_delete->delete();
         return $this->successResponse($sample_delete,'Sample deleted', 200);
     }
+
+
+    public function last_id_sample()
+    {
+        $id = Sample::latest('id')->first();
+
+        return $this->successResponse($id,'Sample last id', 200);
+    }
 }

@@ -113,6 +113,42 @@ class TubeController extends Controller
      */
     public function destroy(Tube $tube)
     {
-        //
+        $tube_delete = Tube::find($tube->id);
+        if (empty($tube_delete)) {
+            return $this->errorResponse('Tube not found',404);
+        }  
+        $tube_delete->delete();
+        return $this->successResponse($tube_delete,'Tube deleted', 200);
+    }
+
+    public function last_id_tube()
+    {
+        $id = Tube::latest('id')->first();
+
+        return $this->successResponse($id,'Tube last id', 200);
+    }
+
+    public function check_tube_exist(Request $request)
+    {
+        if($request->tube_exclude){
+            $tube_exclude = $request->tube_exclude;
+        }else{
+            $tube_exclude = null;
+        }
+        if($request->tube) {
+            $tube = $request->tube;
+        }else{
+            $tube = null;
+        }
+
+        
+        $tube_exist = Tube::where('code', $tube)
+        ->where('code','!=', $tube_exclude)->first();
+        // return $tube_exist;
+        if(!$tube_exist){
+            return response()->json(['exist'=>null], 200);
+        }
+        
+        return response()->json(['exist'=>true], 200);
     }
 }
