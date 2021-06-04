@@ -19,7 +19,7 @@ class TubeObserver
     {
         $this->track($tube, function ($value, $field) {
             return [
-                'body' => "Crea campo {$field} a ${value}",
+                'body' => "Crea Tubo -> campo {$field} valor ${value}",
             ];
         },$tube->sample_id);
     }

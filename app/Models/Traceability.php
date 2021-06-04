@@ -40,4 +40,11 @@ class Traceability extends Model
                 ->orWhere('obs', "LIKE", '%'.$filter.'%')
                 ->orWhere('created_at', "LIKE", '%'.$filter.'%');
     }
+
+    public function scopeSample_id($query, $filter)
+    {
+        if($filter)
+            return $query
+            ->where('sample_id', $filter);
+    }
 }

@@ -43,10 +43,17 @@ class TraceabilityController extends Controller
             $filter = "";
         }
 
+        if ($request->get('sample_id')) {
+            $sample_id = $request->get('sample_id');
+        }else{
+            $sample_id = "";
+        }
+
 
         $traceabilities = $query
         ->with('sample', 'stage', 'tube')
         ->filter($filter)
+        ->sample_id($sample_id)
         ->orderBy('created_at', $sort)
         ->paginate($per_page);
 
