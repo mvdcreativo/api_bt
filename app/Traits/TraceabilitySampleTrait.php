@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Estadio;
 use App\Models\Tnm;
 use App\Models\Traceability;
 use App\Models\TumorLineage;
@@ -69,6 +70,145 @@ trait TraceabilitySampleTrait
                 $v = Tnm::find($value)->name;
                 return ["Topocrafía" => $v];
                 break;
+            case "trat_q":
+                return ["Tratamiento quirúrgico" => $value ? "true" : "false"];
+                break;
+            case "trat_q_date":
+                return ["Fecha tratamiento quirúrgico" => $value];
+                break;
+            case "trat_q_criterio":
+                return ["Creiterio tratamiento quirúrgico" => $value];
+                break;
+            case "trat_q_plan":
+                return ["Plan tratamiento quirúrgico" => $value];
+                break;
+
+            case "radio_t":
+                return ["Radio Terapia" => $value ? "true" : "false"];
+                break;
+            case "radio_t_date":
+                return ["Fecha Radio Terapia" => $value];
+                break;
+            case "radio_t_criterio":
+                return ["Creiterio Radio Terapia" => $value];
+                break;
+            case "radio_t_plan":
+                return ["Plan Radio Terapia" => $value];
+                break;
+
+            case "quimio":
+                return ["Quimioterapia" => $value ? "true" : "false"];
+                break;
+            case "quimio_date":
+                return ["Fecha Quimioterapia" => $value];
+                break;
+            case "quimio_criterio":
+                return ["Creiterio Quimioterapia" => $value];
+                break;
+            case "quimio_plan":
+                return ["Plan Quimioterapia" => $value];
+                break;
+
+            case "homo":
+                return ["Hormonoterapia" => $value ? "true" : "false"];
+                break;
+            case "homo_date":
+                return ["Fecha Hormonoterapia" => $value];
+                break;
+            case "homo_criterio":
+                return ["Creiterio Hormonoterapia" => $value];
+                break;
+            case "homo_plan":
+                return ["Plan Hormonoterapia" => $value];
+                break;
+
+            case "terapia_bio":
+                return ["Terapia Biológica" => $value ? "true" : "false"];
+                break;
+            case "terapia_bio_date":
+                return ["Fecha Terapia Biológica" => $value];
+                break;
+            case "terapia_bio_criterio":
+                return ["Creiterio Terapia Biológica" => $value];
+                break;
+            case "terapia_bio_plan":
+                return ["Plan Terapia Biológica" => $value];
+                break;
+
+            case "otros":
+                return ["Otros" => $value ? "true" : "false"];
+                break;
+            case "otros_date":
+                return ["Fecha Otros" => $value];
+                break;
+            case "otros_criterio":
+                return ["Creiterio Otros" => $value];
+                break;
+            case "otros_plan":
+                return ["Plan Otros" => $value];
+                break;
+
+            case "estadio_id":
+                $v = Estadio::find($value)->name;
+                return ["Estadio" => $v];
+                break;
+
+            case "anatomia":
+                return ["Anatomía Patológica" => $value ? "true" : "false"];
+                break;
+            case "anatomia_date":
+                return ["Fecha Anatomía Patológica" => $value];
+                break;
+
+            case "biopsia":
+                return ["Biopsia" => $value ? "true" : "false"];
+                break;
+
+            case "reseccion_q":
+                return ["A partir de resección Q" => $value ? "true" : "false"];
+                break;
+
+            case "con_cancer":
+                return ["Paciente con cancer" => $value ? "true" : "false"];
+                break;
+
+            case "operacion":
+                return ["Opercaión" => $value];
+                break;
+
+            case "isquemia_min":
+                return ["Isquemia Min." => $value];
+                break;
+
+            case "isquemia_seg":
+                return ["Isquemia Seg." => $value];
+                break;
+
+            case "tacos_cant":
+                return ["Cantidad de tacos" => $value];
+                break;
+            case "laminas_cant":
+                return ["Cantidad de láminas" => $value];
+                break;
+            case "necrosis_tumoral_cant":
+                return ["Porcentaje de necrósis" => $value];
+                break;
+            case "obs":
+                return ["Observaciones Anatomopatológicas" => $value];
+                break;
+
+            case "code":
+                return ["Código" => $value];
+                break;
+
+            case "name":
+                return ["Nombre" => $value];
+                break;
+
+            case "volume":
+                return ["Volúmen" => $value];
+                break;
+
             default:
                 return [$key => $value];
         }

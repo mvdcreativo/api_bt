@@ -10,7 +10,6 @@ class Tube extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'code',
         'volume',
         'sample_id',
