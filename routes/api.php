@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\RoleController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\EstadioController;
 use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\MedicalInstitutionController;
@@ -59,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'users' => UserController::class,
         'stages' => StageController::class,
         'traceabilities' => TraceabilityController::class,
+        'documents' => DocumentController::class,
     ]);
     
     //Check exist
