@@ -60,6 +60,14 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'ubication.update', 'description'=> 'Actualizar datos de un Ubicación', 'guard_name'=>'api']);
         Permission::create(['name' => 'ubication.delete', 'description'=> 'Eliminar Ubicaciones', 'guard_name'=>'api']);
 
+        //Etapas
+        Permission::create(['name' => 'stage.index', 'description'=> 'Listar Etapas', 'guard_name'=>'api']);
+        Permission::create(['name' => 'stage.create', 'description'=> 'Crear Etapas', 'guard_name'=>'api']);
+        Permission::create(['name' => 'stage.show', 'description'=> 'Ver datos de un Etapa', 'guard_name'=>'api']);
+        Permission::create(['name' => 'stage.update', 'description'=> 'Actualizar datos de un Etapa', 'guard_name'=>'api']);
+        Permission::create(['name' => 'stage.delete', 'description'=> 'Eliminar Etapas', 'guard_name'=>'api']);
+
+
         $roleSAdmin = Role::create(['name' => 'SuperAdmin', 'description'=> 'Todos los privilegios', 'guard_name'=>'api']);
         $roleSAdmin->syncPermissions([
             'patient.index', 'patient.show', 'patient.create', 'patient.update','patient.delete',
@@ -68,6 +76,7 @@ class PermissionSeeder extends Seeder
             'ubication.index', 'ubication.show', 'ubication.create', 'ubication.update','ubication.delete',
             'role.index', 'role.show', 'role.create', 'role.update','role.delete',
             'permission.index', 'permission.show', 'permission.create', 'permission.update','permission.delete',
+            'stage.index', 'stage.show', 'stage.create', 'stage.update','stage.delete',
         ]);
     }
 }

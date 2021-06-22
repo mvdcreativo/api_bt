@@ -14,9 +14,9 @@ class StageSeeder extends Seeder
      */
     public function run()
     {
-        Stage::create(['name'=>'Solicitud de estudio de ...a', 'active'=>1]);
-        Stage::create(['name'=>'Solicitud de estudio de ...b', 'active'=>1]);
-        Stage::create(['name'=>'Solicitud de estudio de ...c', 'active'=>1]);
-        Stage::create(['name'=>'Solicitud de estudio de ...d', 'active'=>1]);
+        Stage::create(['name'=>'Solicitud de estudio de ...a', 'active'=>1, 'end'=> false]);
+        Stage::create(['name'=>'Solicitud de estudio de ...b', 'active'=>1, 'end'=> false]);
+        Stage::create(['name'=>'Solicitud de estudio de ...c', 'active'=>1, 'end'=> false]);
+        Stage::create(['name'=>'Solicitud de estudio de ...d', 'active'=>1, 'end'=> false]);
     }
 }
