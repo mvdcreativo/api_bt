@@ -17,10 +17,10 @@ class CreateSamplesTable extends Migration
             $table->id();
             $table->string('code',20);
             $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('type_sample_id');
-            $table->unsignedBigInteger('tumor_lineage_id');
-            $table->unsignedBigInteger('tnm_id');
-            $table->unsignedBigInteger('topography_id');
+            $table->unsignedBigInteger('type_sample_id')->nullable();
+            $table->unsignedBigInteger('tumor_lineage_id')->nullable();
+            $table->unsignedBigInteger('tnm_id')->nullable();
+            $table->unsignedBigInteger('topography_id')->nullable();
 
 
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');

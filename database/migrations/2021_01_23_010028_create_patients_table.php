@@ -16,21 +16,21 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('code', 10);
-            $table->date('birth');
-            $table->string('type_doc', 20);
+            $table->date('birth')->nullable();
+            $table->string('type_doc', 20)->nullable();
             $table->string('n_doc', 20)->unique();
             $table->string('name',50);
             $table->string('last_name');
-            $table->string('phone',50);
-            $table->string('address');
-            $table->string('email');
-            $table->boolean('ashkenasi');
-            $table->string('gender', 100);
+            $table->string('phone',50)->nullable();
+            $table->string('address')->nullable();
+            $table->string('email')->nullable();
+            $table->boolean('ashkenasi')->nullable();
+            $table->string('gender', 100)->nullable();
             $table->char('type_patient', 4);
-            $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('medical_institution_id');
-            $table->unsignedBigInteger('doctor_id');
-            $table->unsignedBigInteger('breed_id');
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->unsignedBigInteger('medical_institution_id')->nullable();
+            $table->unsignedBigInteger('doctor_id')->nullable();
+            $table->unsignedBigInteger('breed_id')->nullable();
             $table->longText('obs')->nullable();
 
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('restrict');

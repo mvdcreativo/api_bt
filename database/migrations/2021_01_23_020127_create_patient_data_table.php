@@ -16,14 +16,14 @@ class CreatePatientDataTable extends Migration
         Schema::create('patient_data', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('patient_id');
-            $table->date('date_surgery');
-            $table->unsignedBigInteger('topography_id');
-            $table->unsignedBigInteger('type_surgery_id');
+            $table->date('date_surgery')->nullable();
+            $table->unsignedBigInteger('topography_id')->nullable();
+            $table->unsignedBigInteger('type_surgery_id')->nullable();
 
-            $table->boolean('obeso');
-            $table->float('obeso_talla')->nullable();
-            $table->float('obeso_peso')->nullable();
-            $table->float('obeso_imc')->nullable();
+            $table->boolean('imc');
+            $table->float('imc_talla')->nullable();
+            $table->float('imc_peso')->nullable();
+            $table->float('imc_imc')->nullable();
 
             $table->boolean('fumador');
             $table->boolean('fumador_activo')->nullable();
