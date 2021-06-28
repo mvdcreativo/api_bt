@@ -16,6 +16,7 @@ class CreateEvolutionsTable extends Migration
         Schema::create('evolutions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->boolean('end')->default(false);
             $table->timestamps();
         });
     }

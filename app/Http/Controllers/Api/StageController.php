@@ -52,23 +52,17 @@ class StageController extends Controller
         return $this->successResponse($stages,'Stages list', 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        $stage = new Stage;
+        $stage->fill($request->all());
+        $stage->save();
+
+        return $this->successResponse($stage,'Stage saved', 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Stage  $stage
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Stage $stage)
     {
         //
@@ -83,17 +77,24 @@ class StageController extends Controller
      */
     public function update(Request $request, Stage $stage)
     {
-        //
+        $stage_update = Stage::find($stage->id);
+        if (empty($stage_update)) {
+            return $this->errorResponse('stage not found',404);
+        }
+        $stage_update->fill($request->all());
+        $stage_update->save();
+
+        return $this->successResponse($stage_update,'stage updated', 200);    
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Stage  $stage
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Stage $stage)
     {
-        //
+        $stage_delete = Stage::find($stage->id);
+        if (empty($stage_delete)) {
+            return $this->errorResponse('State not found',404);
+        }
+        $stage_delete->delete();
+        return $this->successResponse($stage_delete,'State deleted', 200);
     }
 }

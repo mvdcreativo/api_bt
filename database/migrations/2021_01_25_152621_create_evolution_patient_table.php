@@ -17,6 +17,7 @@ class CreateEvolutionPatientTable extends Migration
             $table->id();
             $table->unsignedBigInteger('evolution_id');
             $table->unsignedBigInteger('patient_id');
+            $table->date('date');
             $table->timestamps();
 
             $table->foreign('evolution_id')->references('id')->on('evolutions');

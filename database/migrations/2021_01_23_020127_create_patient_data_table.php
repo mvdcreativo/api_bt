@@ -28,15 +28,18 @@ class CreatePatientDataTable extends Migration
             $table->boolean('fumador');
             $table->boolean('fumador_activo')->nullable();
             $table->string('fumador_cant')->nullable();
+            $table->string('fumador_periodo')->nullable();
 
             $table->boolean('alcoholista');
             $table->boolean('alcoholista_activo')->nullable();
             $table->string('alcoholista_cant')->nullable();       
+            $table->string('alcoholista_periodo')->nullable();
 
             $table->boolean('drogas');
             $table->boolean('drogas_activo')->nullable();
             $table->string('drogas_tipo',30)->nullable();       
-            
+            $table->string('drogas_periodo')->nullable();
+
             $table->boolean('rt');
             $table->string('rt_donde', 30)->nullable();
             $table->date('rt_date')->nullable();
@@ -49,9 +52,12 @@ class CreatePatientDataTable extends Migration
 
             $table->boolean('hormonas');
             $table->string('hormonas_periodo')->nullable();
+            $table->string('tipo_trh')->nullable();
             
             $table->boolean('ambientales');
             $table->string('ambientales_cuales',50)->nullable();
+            $table->string('factor_r_especifico')->nullable();
+
 
             $table->boolean('mamografia');
             $table->string('mamografia_frecuencia')->nullable();
@@ -63,6 +69,32 @@ class CreatePatientDataTable extends Migration
             $table->string('pap_otros')->nullable();
             $table->date('pap_date_ultima')->nullable();
 
+            $table->boolean('fecatest');
+            $table->string('fecatest_frecuencia')->nullable();
+            $table->string('fecatest_otros')->nullable();
+            $table->date('fecatest_date_ultima')->nullable();
+
+            $table->boolean('fibrocolonoscopia');
+            $table->string('fibrocolonoscopia_frecuencia')->nullable();
+            $table->string('fibrocolonoscopia_otros')->nullable();
+            $table->date('fibrocolonoscopia_date_ultima')->nullable();
+
+
+            $table->boolean('fibrogastroscopia');
+            $table->string('fibrogastroscopia_frecuencia')->nullable();
+            $table->string('fibrogastroscopia_otros')->nullable();
+            $table->date('fibrogastroscopia_date_ultima')->nullable();
+            
+            $table->boolean('psa');
+            $table->string('psa_frecuencia')->nullable();
+            $table->string('psa_otros')->nullable();
+            $table->date('psa_date_ultima')->nullable();
+            
+            $table->boolean('rm_mamaria');
+            $table->string('rm_mamaria_frecuencia')->nullable();
+            $table->string('rm_mamaria_otros')->nullable();
+            $table->date('rm_mamaria_date_ultima')->nullable();
+       
             $table->tinyInteger('edad_menarca')->nullable();
             $table->tinyInteger('edad_primer_emb')->nullable();
             $table->tinyInteger('menopausia_edad')->nullable();

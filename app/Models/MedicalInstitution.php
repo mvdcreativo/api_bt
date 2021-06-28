@@ -11,6 +11,7 @@ class MedicalInstitution extends Model
     
     protected $fillable = [
         'name',
+        'serie'
     ];
 
 

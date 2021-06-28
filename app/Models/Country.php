@@ -22,6 +22,11 @@ class Country extends Model
         return $this->hasMany('App\Mondels\State');
     }
 
+    public function patients()
+    {
+        return $this->hasMany('App\Mondels\Patient');
+    }
+
 
     /////////////////////////////
         ///SCOPES

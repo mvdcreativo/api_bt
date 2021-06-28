@@ -24,8 +24,12 @@ class Patient extends Model
         'gender',
         'type_patient',
         'city_id',
+        'nationality_id',
+        'surgery_institution_id',
+        'registroH',
         'medical_institution_id',
         'doctor_id',
+        'derived_by_id',
         'breed_id',
         'obs'
     ];
@@ -47,9 +51,19 @@ class Patient extends Model
         return $this->belongsTo('App\Models\Doctor');
     }
 
+    public function derived_by()
+    {
+        return $this->belongsTo('App\Models\Doctor', 'derived_by_id');
+    }  
+
     public function medical_institution()
     {
         return $this->belongsTo('App\Models\MedicalInstitution');
+    }
+
+    public function surgery_institution()
+    {
+        return $this->belongsTo('App\Models\MedicalInstitution', 'surgery_institution_id');
     }
 
     public function documents()
@@ -60,6 +74,11 @@ class Patient extends Model
     public function city()
     {
         return $this->belongsTo('App\Models\City')->with('state');
+    }
+
+    public function nationality()
+    {
+        return $this->belongsTo('App\Models\Country', 'nationality_id');
     }
 
     public function families()

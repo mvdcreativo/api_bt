@@ -16,6 +16,7 @@ class CreateMedicalInstitutionsTable extends Migration
         Schema::create('medical_institutions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('serie',5)->nullable();
             $table->timestamps();
         });
     }

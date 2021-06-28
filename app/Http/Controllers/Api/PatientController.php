@@ -86,6 +86,7 @@ class PatientController extends Controller
         
         $patient->patient_data;
         $patient->city;
+        $patient->nationality;
         return $this->successResponse($patient,'Patient saved', 201);
 
     }
@@ -99,7 +100,7 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
 
-        $patient = Patient::with('patient_data', 'city')->find($patient->id);
+        $patient = Patient::with('patient_data', 'city', 'nationality')->find($patient->id);
         return $this->successResponse($patient,'Patient show', 200);
         
     }
@@ -178,6 +179,7 @@ class PatientController extends Controller
         
         $patient_update->patient_data;
         $patient_update->city;
+        $patient_update->nationality;
         return $this->successResponse($patient_update,'Patient updated', 200);
 
     }

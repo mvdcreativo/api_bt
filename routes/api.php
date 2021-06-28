@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\EstadioController;
+use App\Http\Controllers\Api\EvolutionController;
 use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\MedicalInstitutionController;
 use App\Http\Controllers\Api\PatientController;
@@ -61,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'stages' => StageController::class,
         'traceabilities' => TraceabilityController::class,
         'documents' => DocumentController::class,
+        'evolutions' => EvolutionController::class,
     ]);
     
     //Check exist
