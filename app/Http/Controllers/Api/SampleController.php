@@ -74,15 +74,15 @@ class SampleController extends Controller
             $sample->fill($request->all());
             $sample->save();
 
-            if($sample && $request->get('sample_data')){
+            if($sample){
                 $sample_data = new SampleData;
-                $sample_data->fill($request->get('sample_data'));
+                $request->get('sample_data') ? $sample_data->fill($request->get('sample_data')): false;
                 $sample_data->sample()->associate($sample);
                 $sample_data->save();
             }
-            if($sample && $request->get('sample_data_anatomo')){
+            if($sample){
                 $sample_data_anatomo = new SampleDataAnatomo();
-                $sample_data_anatomo->fill($request->get('sample_data_anatomo'));
+                $request->get('sample_data_anatomo') ? $sample_data_anatomo->fill($request->get('sample_data_anatomo')) : false;
                 $sample_data_anatomo->sample()->associate($sample);
                 $sample_data_anatomo->save();
             }
@@ -136,7 +136,7 @@ class SampleController extends Controller
         try {
             $samples_update = Sample::find($sample->id);
             $samples_update->fill($request->all());
-            $samples_update->save();
+            
 
             $data = $request->sample_data;
             $data_anatomo =   $request->sample_data_anatomo;
@@ -163,20 +163,23 @@ class SampleController extends Controller
                 }
                 $sample_data_anatomo->save();
             }
+            $samples_update->save();
+            $samples_update->samples_data;
+            $samples_update->patient;
+            $samples_update->type_samples;
+            $samples_update->tumor_lineage;
+            $samples_update->topography;
+            $samples_update->samples_data_anatomo;
+            $samples_update->tnm;
+
+            return $this->successResponse($samples_update,'Sample updated', 200);
         } catch (\Throwable $th) {
             return $th ;
         }
 
-        $samples_update->samples_data;
-        $samples_update->patient;
-        $samples_update->type_samples;
-        $samples_update->tumor_lineage;
-        $samples_update->topography;
-        $samples_update->samples_data_anatomo;
-        $samples_update->tnm;
+
         // $samples->stages;
 
-        return $this->successResponse($samples_update,'Sample updated', 200);
     }
 
     /**

@@ -120,7 +120,7 @@ class TraceabilityController extends Controller
         ->whereNotNull('stage_id')
         ->where('sample_id', $sample_id)
         ->first();
-        $status_sample = $traceability->stage->name;
+        $status_sample = $traceability->stage->name ?? null;
 
         return $this->successResponse($status_sample,'Status Sample', 200);
     }
