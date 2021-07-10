@@ -16,7 +16,7 @@ class CreateSampleDataTable extends Migration
         Schema::create('sample_data', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sample_id');
-            $table->boolean('trat_q');
+            $table->boolean('trat_q')->nullable();
             $table->date('trat_q_date')->nullable();
             $table->string('trat_q_criterio')->nullable();
             $table->string('trat_q_plan',30)->nullable();
